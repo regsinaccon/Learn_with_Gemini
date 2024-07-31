@@ -12,13 +12,14 @@ class kit():
         api_key = os.environ.get("Key")
         genai.configure(api_key=api_key)
         self.modle = genai.GenerativeModel(model_name="gemini-1.5-flash")
-        self.path = f"words.csv"
+        self.current_dir = os.path.dirname(__file__)
+        self.path = os.path.join(self.current_dir,'words.csv')
         if os.path.exists(self.path) == False:
             create_file_path = self.path
             with open (create_file_path,'w',newline='') as source:
                 writer = csv.DictWriter(source,fieldnames = ['word','explain'])
                 writer.writeheader()
-        print("file created")
+    
             
     def prompting_sequence(self,Qnumber:int):
         pass
