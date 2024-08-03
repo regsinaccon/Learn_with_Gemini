@@ -14,26 +14,31 @@ class kit():
         self.modle = genai.GenerativeModel(model_name="gemini-1.5-flash")
         self.current_dir = os.path.dirname(__file__)
         self.path = os.path.join(self.current_dir,'words.csv')
+        # self.temp_file = os.path.join(self.current_dir,'temp.csv')
         if os.path.exists(self.path) == False:
             create_file_path = self.path
             with open (create_file_path,'w',newline='') as source:
                 writer = csv.DictWriter(source,fieldnames = ['word','explain'])
                 writer.writeheader()
-    
-            
+        # if os.path.exists(self.temp_file) == False:
+        #     with open (self.temp_file,'w',newline='') as source:
+        #             writer = csv.DictWriter(source,fieldnames = ['word','explain'])
+        #             writer.writeheader()    
+                
     def prompting_sequence(self,Qnumber:int):
         pass
     def add_and_show_word(self,word:str):
         [is_exist,explanation] = self.word_in_DB(word)
         if is_exist:
             print('give ex')
+
             return explanation
-            # mark_text = explanation
-            # html = markdown.markdown(mark_text)
-            # return html
+                # mark_text = explanation
+                # html = markdown.markdown(mark_text)
+                # return html
             
         else:
-            prompt = f'what is the meaning of {word}'
+            prompt = f'can you explain the meaning of {word},you can add more markdowns to emphasize the words'
             response = self.modle.generate_content(prompt)
             result = response.text
             with open(self.path,'a',newline='') as file:
@@ -62,6 +67,19 @@ class kit():
                 row_num += 1
         return row_num
     
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # class Client():
 #     def __init__(self) -> None:
